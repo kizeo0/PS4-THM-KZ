@@ -3,257 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS4 Themes Repository</title>
+    <title>PS4 Themes Library</title>
     <style>
-        /* --- ESTILOS PROFESIONALES --- */
         :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --ps4-blue: #0072CE;
-            --ps4-hover: #00a4df;
-            --text-color: #e6edf3;
-            --text-muted: #8b949e;
-            --border-color: #30363d;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg: #0d1117;
+            --card: #161b22;
+            --blue: #0072ce;
+            --text: #e6edf3;
+            --border: #30363d;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
         }
 
-        /* --- HEADER --- */
         header {
-            background-color: rgba(13, 17, 23, 0.9);
-            padding: 1.5rem;
-            border-bottom: 2px solid var(--ps4-blue);
+            background: rgba(13, 17, 23, 0.95);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--blue);
             position: sticky;
             top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
         }
 
-        h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
-        h1 span { color: var(--ps4-blue); }
-
-        .search-container { width: 100%; max-width: 500px; position: relative; }
-
-        #search-input {
-            width: 100%;
+        .search-box {
+            width: 90%;
+            max-width: 450px;
             padding: 12px 20px;
             border-radius: 25px;
-            border: 1px solid var(--border-color);
-            background-color: #010409;
+            border: 1px solid var(--border);
+            background: #010409;
             color: white;
-            font-size: 1rem;
-            transition: var(--transition);
+            margin-top: 15px;
+            font-size: 16px;
         }
 
-        #search-input:focus {
-            outline: none;
-            border-color: var(--ps4-blue);
-            box-shadow: 0 0 0 3px rgba(0, 114, 206, 0.3);
+        #debug-console {
+            background: #2a1010;
+            color: #ff7b72;
+            padding: 10px;
+            font-size: 12px;
+            text-align: center;
+            display: none; /* Se activa si hay error */
         }
 
-        /* --- GRID DE TEMAS --- */
-        main { padding: 2rem; max-width: 1400px; margin: 0 auto; }
-
-        #themes-grid {
+        main {
+            padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .theme-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 12px;
             overflow: hidden;
             text-decoration: none;
             color: inherit;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            animation: fadeIn 0.5s ease forwards;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .theme-card:hover {
+        .card:hover {
             transform: translateY(-5px);
-            border-color: var(--ps4-blue);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            border-color: var(--blue);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .img-container {
+        .img-box {
             width: 100%;
             aspect-ratio: 16/9;
-            background-color: #000;
+            background: #000;
             overflow: hidden;
         }
 
-        .img-container img {
+        .img-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
         }
 
-        .theme-card:hover .img-container img { transform: scale(1.05); }
+        .card-info {
+            padding: 15px;
+            text-align: center;
+        }
 
-        .theme-info { padding: 15px; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
-
-        .theme-info h3 {
-            font-size: 0.95rem;
+        .card-info h3 {
+            margin: 0;
+            font-size: 14px;
             font-weight: 500;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            height: 40px;
             overflow: hidden;
         }
 
-        /* --- BOTÓN CARGAR MÁS --- */
-        .controls {
-            display: flex;
-            justify-content: center;
-            padding: 3rem 0;
-        }
-
+        .btn-container { text-align: center; margin-top: 30px; }
         .btn-load {
-            background-color: transparent;
-            color: var(--ps4-blue);
-            border: 2px solid var(--ps4-blue);
             padding: 12px 30px;
+            background: transparent;
+            color: var(--blue);
+            border: 2px solid var(--blue);
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
-            transition: var(--transition);
+            transition: 0.3s;
         }
-
-        .btn-load:hover {
-            background-color: var(--ps4-blue);
-            color: white;
-        }
-
+        .btn-load:hover { background: var(--blue); color: white; }
+        
         .hidden { display: none; }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 600px) {
-            main { padding: 1rem; }
-            header { padding: 1rem; }
-        }
     </style>
 </head>
 <body>
 
+<div id="debug-console"></div>
+
 <header>
-    <h1>PS4 <span>Themes</span> Library</h1>
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Buscar entre cientos de temas...">
-    </div>
+    <h1>PS4 <span>THEMES</span></h1>
+    <input type="text" id="search" class="search-box" placeholder="Escribe para buscar...">
 </header>
 
-<main>
-    <div id="themes-grid">
-        </div>
+<main id="gallery"></main>
 
-    <div class="controls">
-        <button id="load-more" class="btn-load">Cargar más temas</button>
-    </div>
-</main>
+<div class="btn-container">
+    <button id="loadMore" class="btn-load">Cargar más temas</button>
+</div>
 
 <script>
     let allThemes = [];
     let filteredThemes = [];
-    let itemsToShow = 20;
-    const increment = 20;
+    let limit = 20;
 
-    const grid = document.getElementById('themes-grid');
-    const searchInput = document.getElementById('search-input');
-    const loadMoreBtn = document.getElementById('load-more');
+    const gallery = document.getElementById('gallery');
+    const searchInput = document.getElementById('search');
+    const loadMoreBtn = document.getElementById('loadMore');
+    const debug = document.getElementById('debug-console');
 
-    // 1. CARGAR DATOS DEL JSON
+    // Función para limpiar nombres de archivos (espacios a %20, etc)
+    function fixPath(name) {
+        return encodeURIComponent(name).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29");
+    }
+
     async function init() {
         try {
-            const response = await fetch('temas.json');
+            // Intentamos cargar el JSON con una ruta relativa forzada
+            const response = await fetch('./temas.json');
+            
+            if (!response.ok) {
+                throw new Error(`Error ${response.status}: No se encontró temas.json en la raíz.`);
+            }
+
             allThemes = await response.json();
             filteredThemes = [...allThemes];
-            renderGrid();
-        } catch (error) {
-            console.error("Error cargando el JSON:", error);
-            grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Error al cargar el repositorio. Asegúrate de que 'temas.json' esté en la raíz.</p>`;
+            render();
+
+        } catch (err) {
+            debug.style.display = 'block';
+            debug.innerText = "ALERTA: " + err.message;
+            console.error(err);
         }
     }
 
-    // 2. RENDERIZAR LA CUADRÍCULA
-    function renderGrid() {
-        const currentItems = filteredThemes.slice(0, itemsToShow);
-        
-        // Si no hay resultados
-        if (currentItems.length === 0) {
-            grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No se encontraron temas con ese nombre.</p>`;
+    function render() {
+        gallery.innerHTML = '';
+        const items = filteredThemes.slice(0, limit);
+
+        if (items.length === 0) {
+            gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No se encontraron temas.</p>';
             loadMoreBtn.classList.add('hidden');
             return;
         }
 
-        // Crear fragmento para mejorar rendimiento de inserción
-        grid.innerHTML = '';
-        currentItems.forEach(tema => {
+        items.forEach(tema => {
             const card = document.createElement('a');
-            card.className = 'theme-card';
+            card.className = 'card';
             card.href = tema.descarga;
             card.target = '_blank';
-            
-            // Usamos la carpeta Images/ y el nombre del tema + .jpg
-            // Si el nombre tiene caracteres especiales, el navegador suele manejarlos bien, 
-            // pero asegúrate de que coincidan exactamente.
-            const imagePath = `Images/${tema.nombre}.jpg`;
+
+            // CONSTRUCCIÓN DE LA RUTA DE IMAGEN
+            // Forzamos la carpeta "Images/" con I mayúscula.
+            // Usamos fixPath para que los nombres con espacios funcionen en el servidor de GitHub.
+            const imgFileName = fixPath(tema.nombre) + ".jpg";
+            const imgUrl = `./Images/${imgFileName}`;
 
             card.innerHTML = `
-                <div class="img-container">
-                    <img src="${imagePath}" alt="${tema.nombre}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=Vista+Previa+No+Disponible'">
+                <div class="img-box">
+                    <img src="${imgUrl}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=Error+Imagen'">
                 </div>
-                <div class="theme-info">
+                <div class="card-info">
                     <h3>${tema.nombre}</h3>
                 </div>
             `;
-            grid.appendChild(card);
+            gallery.appendChild(card);
         });
 
-        // Mostrar/Ocultar botón de carga
-        if (itemsToShow >= filteredThemes.length) {
+        if (limit >= filteredThemes.length) {
             loadMoreBtn.classList.add('hidden');
         } else {
             loadMoreBtn.classList.remove('hidden');
         }
     }
 
-    // 3. LÓGICA DEL BUSCADOR
+    // Buscador
     searchInput.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase().trim();
-        filteredThemes = allThemes.filter(t => t.nombre.toLowerCase().includes(term));
-        itemsToShow = 20; // Resetear contador al buscar
-        renderGrid();
+        const text = e.target.value.toLowerCase().trim();
+        filteredThemes = allThemes.filter(t => t.nombre.toLowerCase().includes(text));
+        limit = 20;
+        render();
     });
 
-    // 4. LÓGICA CARGAR MÁS
+    // Cargar más
     loadMoreBtn.addEventListener('click', () => {
-        itemsToShow += increment;
-        renderGrid();
+        limit += 20;
+        render();
     });
 
-    // Iniciar aplicación
     init();
 </script>
-
 </body>
 </html>
