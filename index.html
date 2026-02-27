@@ -23,7 +23,6 @@
             padding-bottom: 50px;
         }
 
-        /* --- HEADER --- */
         header {
             background: rgba(13, 17, 23, 0.98);
             padding: 30px 20px;
@@ -37,7 +36,7 @@
 
         .main-logo {
             max-width: 100%;
-            width: 600px; /* Tamaño aumentado como pediste */
+            width: 600px; /* Tamaño aumentado */
             height: auto;
             display: block;
             margin: 0 auto;
@@ -50,7 +49,6 @@
             margin: 10px 0 20px 0;
         }
 
-        /* --- REDES SOCIALES --- */
         .social-container {
             display: flex;
             justify-content: center;
@@ -66,7 +64,6 @@
 
         .social-icon:hover { transform: scale(1.2); }
 
-        /* --- CONTROLES --- */
         .controls-wrapper {
             display: flex;
             flex-direction: column;
@@ -107,7 +104,6 @@
 
         .btn-tool:hover { background: var(--blue); border-color: var(--blue); }
 
-        /* --- GRID --- */
         main {
             padding: 40px 20px;
             display: grid;
@@ -126,32 +122,19 @@
             color: inherit;
             transition: all 0.3s ease;
             cursor: pointer;
-            -webkit-user-select: none; /* Evita selección de texto en móvil al mantener */
             user-select: none;
+            -webkit-user-select: none;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--blue);
-        }
+        .card:hover { transform: translateY(-5px); border-color: var(--blue); }
 
-        .img-box {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            overflow: hidden;
-        }
-
-        .img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .img-box { width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
         .card-info { padding: 15px; text-align: center; }
         .card-info h3 { margin: 0; font-size: 14px; font-weight: 500; }
 
-        /* --- MODAL DE PREVISUALIZACIÓN --- */
+        /* MODAL PREVIEW */
         #preview-modal {
             display: none;
             position: fixed;
@@ -168,31 +151,17 @@
             max-width: 90%;
             max-height: 80%;
             border: 3px solid var(--blue);
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
             border-radius: 8px;
         }
 
         .close-modal {
             position: absolute;
-            top: 20px;
-            right: 30px;
+            top: 20px; right: 30px;
             color: white;
             font-size: 50px;
-            font-weight: bold;
             cursor: pointer;
-            line-height: 1;
         }
 
-        .close-modal:hover { color: var(--blue); }
-
-        .modal-hint {
-            position: absolute;
-            bottom: 20px;
-            color: var(--accent);
-            font-size: 14px;
-        }
-
-        /* --- BOTONES --- */
         .btn-container { text-align: center; margin-top: 40px; }
         .btn-load {
             padding: 14px 40px;
@@ -205,10 +174,6 @@
         }
 
         .hidden { display: none; }
-
-        @media (max-width: 600px) {
-            .main-logo { width: 90%; }
-        }
     </style>
 </head>
 <body>
@@ -236,7 +201,6 @@
 <div id="preview-modal">
     <span class="close-modal" onclick="closePreview()">&times;</span>
     <img id="modal-img" src="" alt="Vista Previa">
-    <p class="modal-hint">Vista en 1920x1080</p>
 </div>
 
 <main id="gallery"></main>
@@ -249,7 +213,7 @@
     let allThemes = [];
     let filteredThemes = [];
     let limit = 20;
-    let pressTimer; // Temporizador para el clic largo
+    let pressTimer;
 
     const gallery = document.getElementById('gallery');
     const searchInput = document.getElementById('search');
@@ -267,7 +231,7 @@
             allThemes = await response.json();
             filteredThemes = [...allThemes];
             render();
-        } catch (err) { console.error("Error cargando JSON", err); }
+        } catch (err) { console.error("Error cargando temas", err); }
     }
 
     function render() {
@@ -275,12 +239,12 @@
         const items = filteredThemes.slice(0, limit);
 
         items.forEach(tema => {
-            const card = document.createElement('div'); // Cambiado a div para manejar mejor el long press
+            const card = document.createElement('div');
             card.className = 'card';
             
             const imgFileName = fixPath(tema.nombre) + ".jpg";
-            const thumbUrl = `./Images/640/${imgFileName}`; // Miniatura
-            const fullUrl = `./Images/${imgFileName}`;     // Original 1920
+            const thumbUrl = `./Images/640/${imgFileName}`; // MINIATURA
+            const fullUrl = `./Images/${imgFileName}`;     // ORIGINAL
 
             card.innerHTML = `
                 <div class="img-box">
@@ -291,46 +255,27 @@
                 </div>
             `;
 
-            // Lógica de Pulsación Larga y Clic Normal
-            const startPress = () => {
-                pressTimer = setTimeout(() => {
-                    showPreview(fullUrl);
-                }, 500); // 0.5 segundos
-            };
-
-            const endPress = (e) => {
-                clearTimeout(pressTimer);
-            };
-
-            const handleClick = (e) => {
-                // Si el modal está abierto, no hacer nada
-                if (modal.style.display === 'flex') return;
-                
-                // Si fue un clic corto, abrir descarga
-                window.open(tema.descarga, '_blank');
-            };
-
-            // Eventos para PC y Móvil
+            // Lógica de pulsación larga (0.5s)
+            const startPress = () => pressTimer = setTimeout(() => showPreview(fullUrl), 500);
+            const endPress = () => clearTimeout(pressTimer);
+            
             card.addEventListener('mousedown', startPress);
             card.addEventListener('touchstart', startPress, {passive: true});
-            
             card.addEventListener('mouseup', endPress);
-            card.addEventListener('mouseleave', endPress);
             card.addEventListener('touchend', endPress);
-            
-            card.addEventListener('click', handleClick);
+            card.addEventListener('click', () => {
+                if(modal.style.display !== 'flex') window.open(tema.descarga, '_blank');
+            });
 
             gallery.appendChild(card);
         });
-
         loadMoreBtn.classList.toggle('hidden', limit >= filteredThemes.length);
     }
 
-    // --- FUNCIONES DE VISTA PREVIA ---
     function showPreview(url) {
         modalImg.src = url;
         modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Bloquear scroll al ver foto
+        document.body.style.overflow = 'hidden';
     }
 
     function closePreview() {
@@ -339,12 +284,8 @@
         document.body.style.overflow = 'auto';
     }
 
-    // Cerrar modal al hacer clic fuera de la imagen
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closePreview();
-    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) closePreview(); });
 
-    // --- ORDENADO Y BUSCADOR ---
     function sortThemes(type) {
         if (type === 'AZ') filteredThemes.sort((a, b) => a.nombre.localeCompare(b.nombre));
         else if (type === 'ZA') filteredThemes.sort((a, b) => b.nombre.localeCompare(a.nombre));
@@ -361,11 +302,7 @@
         render();
     });
 
-    loadMoreBtn.addEventListener('click', () => {
-        limit += 20;
-        render();
-    });
-
+    loadMoreBtn.addEventListener('click', () => { limit += 20; render(); });
     init();
 </script>
 </body>
