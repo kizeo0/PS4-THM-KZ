@@ -37,7 +37,7 @@
 
         .main-logo {
             max-width: 100%;
-            width: 450px; /* Ajuste para que no sea gigante */
+            width: 600px; /* Tamaño aumentado como pediste */
             height: auto;
             display: block;
             margin: 0 auto;
@@ -61,15 +61,12 @@
         .social-icon {
             width: 32px;
             height: 32px;
-            transition: transform 0.3s ease, filter 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-        .social-icon:hover {
-            transform: scale(1.2);
-            filter: brightness(1.2);
-        }
+        .social-icon:hover { transform: scale(1.2); }
 
-        /* --- CONTROLES (Buscador y Orden) --- */
+        /* --- CONTROLES --- */
         .controls-wrapper {
             display: flex;
             flex-direction: column;
@@ -89,11 +86,6 @@
             color: white;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .search-box:focus {
-            border-color: var(--blue);
         }
 
         .sort-container {
@@ -110,17 +102,10 @@
             padding: 8px 15px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
             transition: 0.2s;
         }
 
-        .btn-tool:hover {
-            background: var(--blue);
-            border-color: var(--blue);
-        }
+        .btn-tool:hover { background: var(--blue); border-color: var(--blue); }
 
         /* --- GRID --- */
         main {
@@ -139,13 +124,15 @@
             overflow: hidden;
             text-decoration: none;
             color: inherit;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            -webkit-user-select: none; /* Evita selección de texto en móvil al mantener */
+            user-select: none;
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             border-color: var(--blue);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
 
         .img-box {
@@ -161,20 +148,51 @@
             object-fit: cover;
         }
 
-        .card-info {
-            padding: 15px;
-            text-align: center;
-            background: linear-gradient(to top, #161b22, #1c2128);
+        .card-info { padding: 15px; text-align: center; }
+        .card-info h3 { margin: 0; font-size: 14px; font-weight: 500; }
+
+        /* --- MODAL DE PREVISUALIZACIÓN --- */
+        #preview-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
         }
 
-        .card-info h3 {
-            margin: 0;
+        #preview-modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border: 3px solid var(--blue);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-modal:hover { color: var(--blue); }
+
+        .modal-hint {
+            position: absolute;
+            bottom: 20px;
+            color: var(--accent);
             font-size: 14px;
-            font-weight: 500;
-            line-height: 1.4;
         }
 
-        /* --- CARGAR MÁS --- */
+        /* --- BOTONES --- */
         .btn-container { text-align: center; margin-top: 40px; }
         .btn-load {
             padding: 14px 40px;
@@ -184,50 +202,29 @@
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        .btn-load:hover { background: var(--blue); color: white; transform: scale(1.05); }
-        
-        #debug-console {
-            background: #2a1010; color: #ff7b72; padding: 10px;
-            font-size: 12px; text-align: center; display: none;
         }
 
         .hidden { display: none; }
 
-        /* Responsive */
         @media (max-width: 600px) {
-            .main-logo { width: 85%; }
-            .sort-container { width: 100%; }
-            .btn-tool { flex: 1; justify-content: center; }
+            .main-logo { width: 90%; }
         }
     </style>
 </head>
 <body>
 
-<div id="debug-console"></div>
-
 <header>
     <img src="recursos/titulo.png" alt="PS4 Themes" class="main-logo">
-    
     <p class="subtitle">Creado por KiZeo</p>
 
     <div class="social-container">
-        <a href="https://www.youtube.com/@kizeo0/videos" target="_blank">
-            <img src="recursos/yt.png" alt="YouTube" class="social-icon">
-        </a>
-        <a href="https://github.com/kizeo0" target="_blank">
-            <img src="recursos/git.png" alt="GitHub" class="social-icon">
-        </a>
-        <a href="https://x.com/KiZeo0" target="_blank">
-            <img src="recursos/x.png" alt="X" class="social-icon">
-        </a>
+        <a href="https://www.youtube.com/@kizeo0/videos" target="_blank"><img src="recursos/yt.png" alt="YT" class="social-icon"></a>
+        <a href="https://github.com/kizeo0" target="_blank"><img src="recursos/git.png" alt="Git" class="social-icon"></a>
+        <a href="https://x.com/KiZeo0" target="_blank"><img src="recursos/x.png" alt="X" class="social-icon"></a>
     </div>
 
     <div class="controls-wrapper">
         <input type="text" id="search" class="search-box" placeholder="Buscar temas...">
-        
         <div class="sort-container">
             <button class="btn-tool" onclick="sortThemes('AZ')">🔤 A - Z</button>
             <button class="btn-tool" onclick="sortThemes('ZA')">🔤 Z - A</button>
@@ -235,6 +232,12 @@
         </div>
     </div>
 </header>
+
+<div id="preview-modal">
+    <span class="close-modal" onclick="closePreview()">&times;</span>
+    <img id="modal-img" src="" alt="Vista Previa">
+    <p class="modal-hint">Vista en 1920x1080</p>
+</div>
 
 <main id="gallery"></main>
 
@@ -246,11 +249,13 @@
     let allThemes = [];
     let filteredThemes = [];
     let limit = 20;
+    let pressTimer; // Temporizador para el clic largo
 
     const gallery = document.getElementById('gallery');
     const searchInput = document.getElementById('search');
     const loadMoreBtn = document.getElementById('loadMore');
-    const debug = document.getElementById('debug-console');
+    const modal = document.getElementById('preview-modal');
+    const modalImg = document.getElementById('modal-img');
 
     function fixPath(name) {
         return encodeURIComponent(name).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29");
@@ -259,66 +264,96 @@
     async function init() {
         try {
             const response = await fetch('./temas.json');
-            if (!response.ok) throw new Error(`No se encontró temas.json`);
-
             allThemes = await response.json();
             filteredThemes = [...allThemes];
             render();
-
-        } catch (err) {
-            debug.style.display = 'block';
-            debug.innerText = "ALERTA: " + err.message;
-        }
+        } catch (err) { console.error("Error cargando JSON", err); }
     }
 
     function render() {
         gallery.innerHTML = '';
         const items = filteredThemes.slice(0, limit);
 
-        if (items.length === 0) {
-            gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.6;">No se encontraron temas.</p>';
-            loadMoreBtn.classList.add('hidden');
-            return;
-        }
-
         items.forEach(tema => {
-            const card = document.createElement('a');
+            const card = document.createElement('div'); // Cambiado a div para manejar mejor el long press
             card.className = 'card';
-            card.href = tema.descarga;
-            card.target = '_blank';
-
+            
             const imgFileName = fixPath(tema.nombre) + ".jpg";
-            const imgUrl = `./Images/${imgFileName}`;
+            const thumbUrl = `./Images/640/${imgFileName}`; // Miniatura
+            const fullUrl = `./Images/${imgFileName}`;     // Original 1920
 
             card.innerHTML = `
                 <div class="img-box">
-                    <img src="${imgUrl}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=Error+Imagen'">
+                    <img src="${thumbUrl}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=Error'">
                 </div>
                 <div class="card-info">
                     <h3>${tema.nombre}</h3>
                 </div>
             `;
+
+            // Lógica de Pulsación Larga y Clic Normal
+            const startPress = () => {
+                pressTimer = setTimeout(() => {
+                    showPreview(fullUrl);
+                }, 500); // 0.5 segundos
+            };
+
+            const endPress = (e) => {
+                clearTimeout(pressTimer);
+            };
+
+            const handleClick = (e) => {
+                // Si el modal está abierto, no hacer nada
+                if (modal.style.display === 'flex') return;
+                
+                // Si fue un clic corto, abrir descarga
+                window.open(tema.descarga, '_blank');
+            };
+
+            // Eventos para PC y Móvil
+            card.addEventListener('mousedown', startPress);
+            card.addEventListener('touchstart', startPress, {passive: true});
+            
+            card.addEventListener('mouseup', endPress);
+            card.addEventListener('mouseleave', endPress);
+            card.addEventListener('touchend', endPress);
+            
+            card.addEventListener('click', handleClick);
+
             gallery.appendChild(card);
         });
 
         loadMoreBtn.classList.toggle('hidden', limit >= filteredThemes.length);
     }
 
-    // --- FUNCIONES DE ORDENADO ---
-    function sortThemes(type) {
-        if (type === 'AZ') {
-            filteredThemes.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        } else if (type === 'ZA') {
-            filteredThemes.sort((a, b) => b.nombre.localeCompare(a.nombre));
-        } else if (type === 'RANDOM') {
-            filteredThemes.sort(() => Math.random() - 0.5);
-        }
-        limit = 20; // Reiniciar vista
-        render();
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Volver arriba al ordenar
+    // --- FUNCIONES DE VISTA PREVIA ---
+    function showPreview(url) {
+        modalImg.src = url;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Bloquear scroll al ver foto
     }
 
-    // Buscador
+    function closePreview() {
+        modal.style.display = 'none';
+        modalImg.src = '';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Cerrar modal al hacer clic fuera de la imagen
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closePreview();
+    });
+
+    // --- ORDENADO Y BUSCADOR ---
+    function sortThemes(type) {
+        if (type === 'AZ') filteredThemes.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        else if (type === 'ZA') filteredThemes.sort((a, b) => b.nombre.localeCompare(a.nombre));
+        else if (type === 'RANDOM') filteredThemes.sort(() => Math.random() - 0.5);
+        limit = 20;
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     searchInput.addEventListener('input', (e) => {
         const text = e.target.value.toLowerCase().trim();
         filteredThemes = allThemes.filter(t => t.nombre.toLowerCase().includes(text));
@@ -326,7 +361,6 @@
         render();
     });
 
-    // Cargar más
     loadMoreBtn.addEventListener('click', () => {
         limit += 20;
         render();
