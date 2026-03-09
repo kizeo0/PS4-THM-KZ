@@ -496,7 +496,8 @@
         items.forEach(tema => {
             const card = document.createElement('div');
             card.className = 'card';
-            const imgFileName = fixPath(tema.nombre) + ".jpg";
+            // CAMBIO: extensión cambiada a .webp
+            const imgFileName = fixPath(tema.nombre) + ".webp";
             const thumbUrl = `./Images/640/${imgFileName}`;
             const fullUrl = `./Images/${imgFileName}`;
             
@@ -585,5 +586,3 @@
 </script>
 </body>
 </html>
-
-reeditado por sebas
