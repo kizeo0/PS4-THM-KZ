@@ -4,13 +4,12 @@ title Reparando Carga a GitHub - PS4-THM-KZ
 set REPO_URL=https://github.com/kizeo0/PS4-THM-KZ.git
 
 echo --- PASO 1: Configurando identidad (Necesario para evitar el error) ---
-:: Esto es obligatorio para que Git te deje hacer el "commit"
 git config --local user.email "usuario@ejemplo.com"
 git config --local user.name "Cargador Automatico"
 
 echo.
 echo --- PASO 2: Inicializando Repositorio ---
-:: Si ya existe una carpeta .git corrupta, la reiniciamos
+
 if exist ".git" (
     echo Limpiando rastro anterior...
     rd /s /q ".git"
