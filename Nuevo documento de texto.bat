@@ -31,16 +31,15 @@ git commit -m "by KiZeo"
 
 echo.
 echo --- PASO 6: Cambiando nombre de rama a 'main' ---
-:: Esto corrige el error "src refspec main does not match"
 git branch -M main
 
 echo.
 echo --- PASO 7: Subiendo a GitHub ---
-:: Aumentamos el limite de subida por si las fotos son pesadas
+
 git config http.postBuffer 524288000
-:: Usamos -f (force) para que sobreescriba cualquier error de desincronizacion
+
 git push -u origin main -f
 
 echo.
-echo --- ¡LISTO! Si no hubo errores de internet, tus fotos ya estan en el repo ---
+echo --- ¡LISTO! 
 pause
