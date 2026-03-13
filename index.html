@@ -15,6 +15,8 @@
             --blue-dark: #0056b3;
             --border-color: rgba(255,255,255,0.05);
             --bg-card: rgba(20, 26, 41, 0.7);
+            --glow-preview: rgba(88, 166, 255, 0.5);
+            --glow-download: rgba(0, 86, 179, 0.6);
         }
 
         * { box-sizing: border-box; }
@@ -260,6 +262,7 @@
             gap: 10px;
         }
 
+        /* --- BOTONES CON EFECTOS DE LUZ --- */
         .btn {
             flex: 1;
             padding: 10px 0;
@@ -269,28 +272,69 @@
             font-weight: 500;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden; /* Necesario para el efecto de brillo */
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        /* Efecto de destello (shine) al pasar el cursor */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: all 0.6s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Feedback al presionar */
+        .btn:active {
+            transform: scale(0.95);
         }
 
         .btn-preview {
-            background: rgba(88, 166, 255, 0.15);
+            background: rgba(88, 166, 255, 0.1);
             color: var(--blue-light);
             border: 1px solid rgba(88, 166, 255, 0.3);
         }
 
         .btn-preview:hover {
-            background: var(--blue-light);
+            background: rgba(88, 166, 255, 0.25);
             color: white;
+            border-color: var(--blue-light);
+            box-shadow: 0 0 15px var(--glow-preview);
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
         }
 
         .btn-download {
             background: var(--blue-dark);
             color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .btn-download:hover {
             background: #0066d6;
+            box-shadow: 0 0 20px var(--glow-download);
+            transform: translateY(-2px);
         }
+
+        /* ---------------------------------- */
 
         .pagination {
             display: flex;
@@ -557,7 +601,6 @@
             const dynamic = isDynamic(tema);
             const tagText = dynamic ? 'Dinámico' : 'Estático';
 
-            // SOLUCIÓN: Usamos encodeURIComponent para el enlace de descarga para evitar que las comillas rompan el onclick
             card.innerHTML = `
                 <div class="img-wrapper">
                     <img src="${thumbUrl}" alt="${tema.nombre}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=No+Image'">
@@ -619,7 +662,6 @@
 
     init();
 
-    // --- FUNCIONALIDAD: clic en el banner para volver al inicio ---
     function resetToMain() {
         if (!allThemes.length) return;
         searchText = '';
