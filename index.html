@@ -59,8 +59,15 @@
             letter-spacing: 0.5px;
         }
         
-        .by-text { color: #7a8c9e; font-weight: 400; }
-        .kizeo-text { color: #4a88c7; font-weight: 500; }
+        .by-text {
+            color: #7a8c9e;
+            font-weight: 400;
+        }
+
+        .kizeo-text {
+            color: #4a88c7;
+            font-weight: 500;
+        }
 
         .social-container {
             position: absolute;
@@ -75,7 +82,9 @@
             height: 32px;
             transition: transform 0.3s ease;
         }
-        .social-icon:hover { transform: scale(1.1); }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
 
         .toolbar {
             display: flex;
@@ -118,6 +127,18 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 15px rgba(88, 166, 255, 0.15); 
         }
 
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px; height: 22px;
+            fill: none;
+            stroke: #8b9db5;
+            stroke-width: 2.5;
+            pointer-events: none;
+        }
+
         .filters-container {
             display: flex;
             gap: 20px;
@@ -135,22 +156,34 @@
             border-radius: 8px;
             cursor: pointer;
             outline: none;
+            font-family: inherit;
+            font-size: 14px;
         }
 
         .random-button {
             background: transparent;
             border: none;
             cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: transform 0.2s ease;
         }
 
-        .dado-icon { width: 32px; height: 32px; }
+        .dado-icon {
+            width: 32px;
+            height: 32px;
+        }
 
         @keyframes dice-spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .spinning { animation: dice-spin 0.5s ease-out; }
+
+        .spinning {
+            animation: dice-spin 0.5s ease-out;
+        }
 
         main {
             padding: 0 40px 40px 40px;
@@ -177,70 +210,183 @@
         }
 
         .img-wrapper {
-            position: relative; width: 100%; aspect-ratio: 16/9;
-            border-radius: 10px; overflow: hidden; background: #000;
-        }
-        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
-
-        .tag { background: rgba(0,0,0,0.75); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
-
-        .card-title {
-            margin: 15px 0; font-size: 15px; font-weight: 400; text-align: center;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
         }
 
-        /* --- BOTONES CORREGIDOS --- */
-        .btn-group { display: flex; gap: 10px; }
-        
-        .btn {
-            flex: 1; padding: 10px 0; border-radius: 20px; border: none;
-            font-family: inherit; font-weight: 500; font-size: 13px; cursor: pointer; transition: 0.2s;
-            text-decoration: none; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
         }
 
-        .btn-preview { 
-            background: rgba(88, 166, 255, 0.15); 
-            color: var(--blue-light); 
-            border: 1px solid rgba(88, 166, 255, 0.3); 
-        }
-        .btn-preview:hover { 
-            background: var(--blue-light); 
-            color: white; 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 12px rgba(88,166,255,0.3); 
+        .tags {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            display: flex;
+            gap: 5px;
         }
 
-        .btn-download { 
-            background: var(--blue-dark); 
-            color: white; 
+        .tag {
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .btn-download:hover { 
-            background: #0066d6; 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 12px rgba(0,102,214,0.4); 
-        }
-        /* -------------------------- */
 
-        .pagination { display: flex; justify(content: center; gap: 8px; margin: 40px 0; }
-        .page-btn {
-            background: rgba(20, 26, 41, 0.8); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);
-            width: 38px; height: 38px; border-radius: 8px; cursor: pointer; transition: 0.2s;
+        .card-title {
+            margin: 15px 0;
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--text-main);
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .page-btn:hover:not(:disabled) { background: rgba(255,255,255,0.1); color: white; transform: translateY(-2px); }
-        .page-btn.active { background: var(--blue-light); color: white; }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 0;
+            border-radius: 20px;
+            border: none;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-preview {
+            background: rgba(88, 166, 255, 0.15);
+            color: var(--blue-light);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+
+        .btn-preview:hover {
+            background: var(--blue-light);
+            color: white;
+        }
+
+        .btn-download {
+            background: var(--blue-dark);
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #0066d6;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 40px 0 60px 0;
+        }
+
+        .page-btn {
+            background: rgba(20, 26, 41, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .page-btn.active {
+            background: var(--blue-light);
+            color: white;
+            border-color: var(--blue-light);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
 
         #preview-modal {
-            visibility: hidden; opacity: 0; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); z-index: 1000; display: flex; justify-content: center; align-items: center;
-            backdrop-filter: blur(5px); transition: 0.3s;
+            visibility: hidden;
+            opacity: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
         }
-        #preview-modal.show { visibility: visible; opacity: 1; }
-        #preview-modal img { max-width: 90%; max-height: 85%; border-radius: 8px; border: 2px solid var(--blue-light); box-shadow: 0 0 30px rgba(0,0,0,0.8); }
-        .close-modal { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
 
-        footer { text-align: center; color: var(--text-muted); font-size: 12px; padding: 20px 0; }
+        #preview-modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #preview-modal img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 45px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            padding-bottom: 30px;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 20px 15px; }
+            .social-container { position: static; margin-top: 20px; justify-content: center; }
+            main { padding: 0 20px 20px 20px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .main-logo { max-width: 320px; }
+        }
     </style>
 </head>
 <body>
@@ -281,14 +427,20 @@
 </div>
 
 <main id="gallery"></main>
-<div id="no-results" style="display:none; text-align:center;"><h2>No se encontraron temas</h2></div>
+
+<div id="no-results" style="display:none; text-align:center; padding: 50px;">
+    <h2 style="color: var(--text-muted); font-weight: 400;">No se encontraron temas</h2>
+</div>
+
 <div class="pagination" id="pagination"></div>
 
-<footer>Creado por KiZeo - Para la Comunidad</footer>
+<footer>
+    &copy; 2026 PS4 Themes Library. Todos los derechos reservados.
+</footer>
 
 <div id="preview-modal">
     <span class="close-modal" onclick="closePreview()">&times;</span>
-    <img id="modal-img" src="" alt="Vista Previa">
+    <img id="modal-img" src="" alt="Vista Previa Full">
 </div>
 
 <script>
@@ -311,7 +463,10 @@
     const noResults = document.getElementById('no-results');
 
     function fixPath(name) {
-        return encodeURIComponent(name).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29");
+        return encodeURIComponent(name)
+            .replace(/'/g, "%27")
+            .replace(/\(/g, "%28")
+            .replace(/\)/g, "%29");
     }
 
     function isDynamic(theme) {
@@ -320,14 +475,17 @@
 
     function applyFilters() {
         let temp = allThemes.filter(theme => {
-            if (currentCategory === 'DYN') return isDynamic(theme);
-            if (currentCategory === 'STA') return !isDynamic(theme);
-            return true;
+            const matchesCat = (currentCategory === 'ALL') || 
+                               (currentCategory === 'DYN' && isDynamic(theme)) || 
+                               (currentCategory === 'STA' && !isDynamic(theme));
+            const matchesSearch = theme.nombre.toLowerCase().includes(searchText);
+            return matchesCat && matchesSearch;
         });
-        if (searchText) temp = temp.filter(t => t.nombre.toLowerCase().includes(searchText));
+
         if (currentSort === 'AZ') temp.sort((a, b) => a.nombre.localeCompare(b.nombre));
         else if (currentSort === 'ZA') temp.sort((a, b) => b.nombre.localeCompare(a.nombre));
         else if (currentSort === 'RANDOM') temp.sort(() => Math.random() - 0.5);
+
         filteredThemes = temp;
         currentPage = 1;
         render();
@@ -352,6 +510,7 @@
         const icon = randomBtn.querySelector('.dado-icon');
         icon.classList.add('spinning');
         setTimeout(() => icon.classList.remove('spinning'), 500);
+        
         currentSort = 'RANDOM';
         sortSelect.value = 'RANDOM';
         applyFilters();
@@ -364,7 +523,10 @@
             allThemes.sort((a, b) => a.nombre.localeCompare(b.nombre));
             filteredThemes = [...allThemes];
             render();
-        } catch (err) { console.error("Error", err); }
+        } catch (err) {
+            console.error("Error cargando temas:", err);
+            gallery.innerHTML = '<p>Error al cargar la galería.</p>';
+        }
     }
 
     function render() {
@@ -378,58 +540,106 @@
         }
 
         const totalPages = Math.ceil(filteredThemes.length / itemsPerPage);
+        if (currentPage > totalPages) currentPage = totalPages;
+        
         const start = (currentPage - 1) * itemsPerPage;
-        const items = filteredThemes.slice(start, start + itemsPerPage);
+        const end = start + itemsPerPage;
+        const items = filteredThemes.slice(start, end);
 
         items.forEach(tema => {
             const card = document.createElement('div');
             card.className = 'card';
+            
             const imgFileName = fixPath(tema.nombre) + ".webp";
             const thumbUrl = `./Images/640/${imgFileName}`;
             const fullUrl = `./Images/${imgFileName}`;
             
+            const dynamic = isDynamic(tema);
+            const tagText = dynamic ? 'Dinámico' : 'Estático';
+
+            // SOLUCIÓN: Usamos encodeURIComponent para el enlace de descarga para evitar que las comillas rompan el onclick
             card.innerHTML = `
                 <div class="img-wrapper">
                     <img src="${thumbUrl}" alt="${tema.nombre}" loading="lazy" onerror="this.src='https://placehold.co/600x337/161b22/8b949e?text=No+Image'">
-                    <div style="position:absolute; bottom:8px; right:8px;"><span class="tag">[${isDynamic(tema) ? 'Dinámico' : 'Estático'}]</span></div>
+                    <div class="tags">
+                        <span class="tag">[${tagText}]</span>
+                        <span class="tag">[PS4]</span>
+                    </div>
                 </div>
                 <h3 class="card-title" title="${tema.nombre}">${tema.nombre}</h3>
                 <div class="btn-group">
                     <button class="btn btn-preview" onclick="showPreview('${fullUrl.replace(/'/g, "\\'")}')">Vista previa</button>
-                    <a href="${tema.descarga}" target="_blank" class="btn btn-download">Descargar</a>
+                    <button class="btn btn-download" onclick="window.open('${tema.descarga.replace(/'/g, "\\'")}', '_blank')">Descargar</button>
                 </div>
             `;
             gallery.appendChild(card);
         });
+
         renderPagination(totalPages);
     }
 
     function renderPagination(totalPages) {
         paginationContainer.innerHTML = '';
         if (totalPages <= 1) return;
-        for (let i = 1; i <= totalPages; i++) {
+
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'page-btn';
+        prevBtn.innerHTML = '&lt;';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.onclick = () => { currentPage--; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+        paginationContainer.appendChild(prevBtn);
+
+        const maxVisible = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+        
+        if (endPage - startPage + 1 < maxVisible) {
+            startPage = Math.max(1, endPage - maxVisible + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
             const btn = document.createElement('button');
             btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
             btn.textContent = i;
             btn.onclick = () => { currentPage = i; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
             paginationContainer.appendChild(btn);
         }
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'page-btn';
+        nextBtn.innerHTML = '&gt;';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.onclick = () => { currentPage++; render(); window.scrollTo({top: 0, behavior: 'smooth'}); };
+        paginationContainer.appendChild(nextBtn);
     }
 
     function showPreview(url) { modalImg.src = url; modal.classList.add('show'); }
-    function closePreview() { modal.classList.remove('show'); }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        const logo = document.querySelector('.main-logo');
-        if (logo) logo.addEventListener('click', () => {
-            searchInput.value = ''; searchText = '';
-            catSelect.value = 'ALL'; currentCategory = 'ALL';
-            sortSelect.value = 'AZ'; currentSort = 'AZ';
-            applyFilters();
-        });
-    });
+    function closePreview() { modal.classList.remove('show'); setTimeout(() => { modalImg.src = ''; }, 300); }
+    modal.addEventListener('click', (e) => { if (e.target === modal) closePreview(); });
 
     init();
+
+    // --- FUNCIONALIDAD: clic en el banner para volver al inicio ---
+    function resetToMain() {
+        if (!allThemes.length) return;
+        searchText = '';
+        searchInput.value = '';
+        currentCategory = 'ALL';
+        catSelect.value = 'ALL';
+        currentSort = 'AZ';
+        sortSelect.value = 'AZ';
+        filteredThemes = [...allThemes].sort((a, b) => a.nombre.localeCompare(b.nombre));
+        currentPage = 1;
+        render();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const logo = document.querySelector('.main-logo');
+        if (logo) {
+            logo.addEventListener('click', resetToMain);
+        }
+    });
 </script>
+
 </body>
 </html>
